@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+   <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon><ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+ <div style="text-align: center;">
+         <ion-img src="http://www.bluecloud.com.mx/2019/wp-content/images/logo.png " style="width: auto;height: 12vh;margin-top:80px; "></ion-img>
+ </div>
+<div style="margin-left: 20px; margin-right: 20px;"> 
+   <ion-row>
+     <ion-col size="12">
+          <ion-item >
+              <ion-label position="floating">Usuario</ion-label>
+              <ion-input  [(ngModel)]="usuario"   type="text"  ></ion-input>
+          </ion-item>
+      </ion-col>
+   </ion-row>
+   <ion-row>
+      <ion-col size="12">
+           <ion-item >
+               <ion-label position="floating">Contraseña</ion-label>
+               <ion-input   [(ngModel)]="pass"  type="password" ></ion-input>
+           </ion-item>
+       </ion-col>
+    </ion-row>
+  
+    
+   <div style="text-align: center;">
+      <ion-button   (click)="alClickIniciarSesion()" >Iniciar
+         <ion-ripple-effect ></ion-ripple-effect>
+      </ion-button>
+   </div>
+      <ion-row>
+         <ion-col size="12">
+            <a ion-item  href="/registro"> Registrarse </a>
+         </ion-col>
+      </ion-row>
+   </div> 
+
+  
+  
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon slot="icon-only" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Acuerdos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <div class="contendorCedicoop">
+          <ion-row *ngIf="acuerdos?.Estatus==200">
+            <ion-col size="12" >
+              <ion-list  *ngFor= "let item of acuerdos?.Model ">
+                <ion-item (click) = "alClickMuestraAcuerdoDetalle(item)" >
+                   
+                  <ion-label>{{item.Descripcion}}</ion-label>
+              
+                  <div *ngIf="item.fueVotado">
+                    <img  class ="img-list" *ngIf="item.aFavor"    src ="assets/img/votoArribaBlue.png" >
+                    <img class ="img-list" *ngIf="item.enContra"  src ="assets/img/votoAbajoRed.png"   >
+                 </div>
+
+                  <ion-button *ngIf="item.activarVotacion" color="success">
+                    <ion-icon slot="icon-only" name="unlock"></ion-icon>
+                  </ion-button>
+
+                  <ion-button *ngIf="!item.activarVotacion" color="danger">
+                    <ion-icon slot="icon-only" name="lock"></ion-icon>
+                  </ion-button>
+
+
+
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="acuerdos?.Estatus!=200">
+          <ion-label>{{acuerdos?.Mensaje}}</ion-label>
+        </ion-row>
+
+  </div>
+   
+</ion-content>
+

@@ -1,0 +1,76 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="MuestraMenu()">
+        <ion-icon slot="icon-only" name="ios-keypad"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Asambleas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu contentId="content" side="start" menuId="first">
+    <!--<ion-header> 
+       <ion-toolbar> 
+          <ion-title>Menu</ion-title> 
+       </ion-toolbar>
+    </ion-header> -->
+    <ion-content>
+      <ion-row>
+        <div id="profileImage">
+            {{nombre}}
+        </div>
+      </ion-row>
+      <ion-row class="ion-text-center">
+        <ion-col>
+            <ion-label *ngIf="socio != undefined"  >{{socio.Nombre+' '+socio.Apellidos}}</ion-label>
+        </ion-col>
+        <ion-item-divider></ion-item-divider>
+      </ion-row>
+        
+        <ion-list>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+          <ion-item>Menu Item</ion-item>
+        </ion-list>
+   </ion-content>
+</ion-menu> 
+
+<ion-content>
+
+
+      <ion-grid>
+        <ion-row *ngIf="asambleas?.Estatus==200">
+          <ion-col size="12" *ngFor="let item of asambleas?.Model">
+            <ion-list>
+                <ion-item (click)="DetalleAsamblea(item)">
+                  <ion-col size="6"  >
+                    <ion-label>{{item.NombreAsamblea}}</ion-label>
+                  </ion-col>
+                  <ion-col size="2" offset="1">
+                      <ion-button *ngIf="item.EstatusAsamblea==2" color="success">
+                        <ion-icon slot="icon-only" name="unlock"></ion-icon>
+                      </ion-button>
+
+                      <ion-button *ngIf="item.EstatusAsamblea!=2"   color="warning">
+                        <ion-icon slot="icon-only" name="lock"></ion-icon>
+                      </ion-button>
+                  </ion-col>
+                  <ion-col size="2"  offset="2">
+                    <ion-icon   name="ios-arrow-forward"></ion-icon>
+                  </ion-col>
+                </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="asambleas?.Estatus!=200">
+            No existen Asambleas       
+      </ion-row>
+
+      </ion-grid>
+
+</ion-content>
+<ion-router-outlet id="content" main>         </ion-router-outlet> 

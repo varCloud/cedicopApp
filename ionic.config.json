@@ -1,0 +1,7 @@
+{
+  "name": "cediApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
