@@ -1,7 +1,7 @@
 import { AlertController } from '@ionic/angular';
 import { AcuerdosService } from './../Servicios/acuerdos.service';
 import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Utils } from './../Utilerias/Utils'
 
@@ -17,8 +17,9 @@ const circuloArray = 2 * Math.PI * circuloR
   templateUrl: './acuerdos-detalle.page.html',
   styleUrls: ['./acuerdos-detalle.page.scss'],
 })
-export class AcuerdosDetallePage implements OnInit {
+export class AcuerdosDetallePage implements OnInit    {
 
+  socio : any;
   acuerdo : any; 
   estatus : any;
   votoArribaBlack : string;
@@ -28,7 +29,7 @@ export class AcuerdosDetallePage implements OnInit {
   percent : BehaviorSubject<number> = new BehaviorSubject(100);
   timer :number // segundos
   intervarl;
-  duracion = 30;
+  duracion = 5;
   circuloR= circuloR;
   circuloArray = circuloArray
   afavor : boolean = false
@@ -41,19 +42,22 @@ export class AcuerdosDetallePage implements OnInit {
 
   ngOnInit() {
 
-    this.startTimer(this.duracion);
     
     if(this.router.getCurrentNavigation().extras.state){
       this.acuerdo =  this.router.getCurrentNavigation().extras.state.acuerdo;
+      this.socio = this.router.getCurrentNavigation().extras.state.socio;
       console.log(this.acuerdo);
+      console.log("IdSocio: "+this.socio.IdSocio)
     }
+    this.startTimer(this.duracion);
   }
+ 
 
   alClickAceptar(){
     this.utils.presentLoading("procesando su voto.");
     this.acuerdo.votosAFavor = this.afavor;
     this.acuerdo.votosEnContra = this.enContra;
-    this.acuerdoServicio.VotarAcuerdos(this.acuerdo).subscribe(data =>{
+    this.acuerdoServicio.VotarAcuerdos(this.acuerdo,this.socio.IdSocio).subscribe(data =>{
           this.estatus  = data;
           console.log(data);
           this.utils.cerrarLoading();
@@ -143,6 +147,14 @@ export class AcuerdosDetallePage implements OnInit {
     {
       console.log("timer: "+this.stopTimer);
       this.stopTimer();
+      if(!this.afavor && !this.enContra )
+      {
+        this.enContra = true;
+      }
+      this.acuerdo.votosAFavor = this.afavor;
+      this.acuerdo.votosEnContra = this.enContra;
+      this.alClickAceptar()
+
     }
     
   }
@@ -151,6 +163,5 @@ export class AcuerdosDetallePage implements OnInit {
     const percentFloat = percent / 100;
     return circuloArray * (1-percentFloat);
   }
-
-
+ 
 }

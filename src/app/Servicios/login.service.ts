@@ -1,4 +1,4 @@
-import { environment } from '../../environments/environment';
+import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -9,21 +9,38 @@ import { Injectable } from '@angular/core';
 })
 export class LoginService {
  
-  metodos: String
+  RegistrarSocio : string  = "RegistrarSocio" 
+  ValidaSocio : string  = "ValidaSocio" 
+
   url : string
+  private registro : any;
   constructor(private httpClient : HttpClient   ) {
-    this.metodos = "wsSocio/"
+      
    }
 
-   validaSocio(noSocio , contrasena){
+   private crearUrl(metodo : string )
+   {
+      return  environment.urlServicios+environment.ControladorWsSocio+ metodo;
+   }
 
-      let postData = "NoSocio="+noSocio+"&contrasena="+contrasena 
-      this.url = environment.urlServicios+this.metodos+"validaSocio";
+   validaSocio(idSocio , contrasena){
+
+      let postData = "IdSocio="+idSocio+"&Contrasena="+contrasena 
+      this.url =this.crearUrl(this.ValidaSocio)
 
       return this.httpClient.post(this.url,postData,{
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
    }
+
+ 
+ RegistarSocio(registro){
+  this.registro = registro;
+  this.url =this.crearUrl(this.RegistrarSocio)
+  let postData = {"IdSocio" : this.registro.IdSocio , "Contrasena" : this.registro.Contrasena};
+
+  return this.httpClient.post(this.url,postData)
+}
 
 
 }

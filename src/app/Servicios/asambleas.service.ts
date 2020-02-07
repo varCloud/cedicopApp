@@ -10,27 +10,35 @@ import { Injectable } from '@angular/core';
 
 export class AsambleasService {
 
-  private MetodoObtenerAsambleas : string
+  private MetodoObtenerAsambleas : string = 'ObtenerAsambleas/'
   private url : string
+  private RegistrarSocioAsamblea : string  = "RegistrarSocioAsamblea" 
 
   constructor(private httpClient : HttpClient) {
-    this.MetodoObtenerAsambleas = 'ObtenerAsambleas/'
 
    }
 
+   private crearUrl(metodo : string )
+   {
+      return  environment.urlServicios+environment.ControladorWsAsamblea+ metodo;
+   }
+   
    ObtenerAsambleas()
    {
-        this.url = environment.urlServicios+environment.ControladorWsWsAsamblea+this.MetodoObtenerAsambleas;
+        this.url = this.crearUrl(this.MetodoObtenerAsambleas);
         let postData = "idAsamblea=0";
         return this.httpClient.post(this.url,postData,{
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
    }
 
-   ObtenerImagen()
-   {
-      return this.httpClient.get("https://ui-avatars.com/api/?name=John+Doe");
-   }
+ 
+   
+   registrarSocioAsamblea(idSocio , idAsamblea){
+    this.url =this.crearUrl(this.RegistrarSocioAsamblea)
+    let postData = {"IdSocio" : idSocio , "idAsamblea" : idAsamblea};
+    return this.httpClient.post(this.url,postData)
+ }
 
 
 

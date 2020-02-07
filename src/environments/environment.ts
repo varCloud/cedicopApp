@@ -6,8 +6,9 @@ export const environment = {
   production: false,
   urlServicios:'http://localhost:60458/api/',
   urlServiciosApi :'https://swapi.co/api/',
-  ControladorWsWsAsamblea :'WsAsamblea/',
-  ControladorWsWsAcuerdos :'WsAcuerdos/'
+  ControladorWsAsamblea :'WsAsamblea/',
+  ControladorWsAcuerdos :'WsAcuerdos/',
+  ControladorWsSocio :'WsSocio/'
 };
 
 /*

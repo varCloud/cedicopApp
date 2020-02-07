@@ -1,8 +1,10 @@
+import { LoginService } from './../Servicios/login.service';
 import { Utils } from './../Utilerias/Utils';
 import { Preferences } from './../Utilerias/Preferences';
 import { ToastController, AlertController, MenuController  } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AsambleasService} from '../Servicios/asambleas.service'
+import { Platform } from '@ionic/angular';
 
 //para navegar entre paginas
 import { Router , NavigationExtras  } from '@angular/router';
@@ -13,13 +15,15 @@ import { Router , NavigationExtras  } from '@angular/router';
   styleUrls: ['./principal.page.scss'],
 })
 export class PrincipalPage implements OnInit {
-
+  
+  data : any;
   asambleas : any ;
   id: string;
   path : string;
   asamblea : any;
   socio : any;
   nombre : string;
+  backButtonSubscription; 
 
   constructor( private router:Router , 
     public asambleasService : AsambleasService, 
@@ -27,7 +31,9 @@ export class PrincipalPage implements OnInit {
     private alertController: AlertController,
     private preferences : Preferences,
     private utils : Utils,
-    private menu: MenuController) {
+    private menu: MenuController,
+    private platform : Platform,
+    ) {
 
 
   }
@@ -45,7 +51,7 @@ export class PrincipalPage implements OnInit {
     this.menu.open('custom');
   }
   ngOnInit() {
-      this.MuestraAsamblea()
+     
       this.preferences.getValue("socio").then((val)=>{
         this.socio = val;
         console.log("socio: "+JSON.stringify(this.socio));
@@ -68,6 +74,7 @@ export class PrincipalPage implements OnInit {
               this.preferences.setValue("bienvenido", true);
           }
       });
+      this.MuestraAsamblea();
   }
 
   MuestraAsamblea(){
@@ -79,7 +86,7 @@ export class PrincipalPage implements OnInit {
   DetalleAsamblea(item){
     this.asamblea = item;
      
-     if (item.EstatusAsamblea ==2){
+     if (this.asamblea.EstatusAsamblea ==2){
        this.presentAlertMultipleButtons();
      }else{
         var toast = this.toastController.create({
@@ -97,25 +104,39 @@ export class PrincipalPage implements OnInit {
       message: '',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
         }, {
           text: 'Iniciar',
           handler: () => {
-
-           let navigationExtras: NavigationExtras = {
-              state: {
-                asamblea: this.asamblea
-              }
-            };
-            this.router.navigate(['/acuerdos'], navigationExtras);
-            //this.router.navigate(['/acuerdos',this.asamblea.IdAsamblea])
-
+            this.utils.presentLoading("Cargando Acuerdos ...");
+            this.asambleasService.registrarSocioAsamblea(this.socio.IdSocio ,  this.asamblea.IdAsamblea).subscribe(data=> {
+                  this.data = data;
+                  this.utils.cerrarLoading()
+                  if(this.data.Estatus == 200){
+                    let navigationExtras: NavigationExtras = {
+                      state: {
+                        asamblea: this.asamblea,
+                        socio : this.socio
+                      }
+                    };
+                    this.router.navigate(['/acuerdos'], navigationExtras);
+                  }else{
+                     this.utils.muestraToast("Intenta de nuevo para registrarte en la asamblea");
+                  }
+            }, err=> {
+                  this.utils.cerrarLoading()
+            })
           }
         }
       ]
     });
 
     await alert.present();
+  }
+ 
+
+  salir(){
+    navigator['app'].exitApp();
   }
 
 }

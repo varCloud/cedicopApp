@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
 
   }
 
+  
   alClickIniciarSesion(){
       console.log("usuario "+this.usuario+" pass: "+this.pass)
       this.wsLogin.validaSocio(this.usuario , this.pass).subscribe(data=>{

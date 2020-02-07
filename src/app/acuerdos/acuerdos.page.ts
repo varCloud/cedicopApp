@@ -5,6 +5,7 @@ import {  ActivatedRoute , Router , NavigationExtras} from '@angular/router'; //
 import { AcuerdosService } from './../Servicios/acuerdos.service'
 
 
+
 @Component({
   selector: 'app-acuerdos',
   templateUrl: './acuerdos.page.html',
@@ -12,6 +13,7 @@ import { AcuerdosService } from './../Servicios/acuerdos.service'
 })
 export class AcuerdosPage implements OnInit {
 
+  socio : any;
   asamblea : any;
   acuerdos : any;
   acuerdo : any ;
@@ -30,7 +32,9 @@ export class AcuerdosPage implements OnInit {
      console.log("OnIniti: AcuerdosPage");
      if(this.router.getCurrentNavigation().extras.state){
         this.asamblea =  this.router.getCurrentNavigation().extras.state.asamblea;
-        console.log(this.asamblea.IdAsamblea);
+        this.socio = this.router.getCurrentNavigation().extras.state.socio;
+        console.log("idAsamble: "+this.asamblea.IdAsamblea);
+        console.log("idSocio: "+this.socio.IdSocio);
      }
     
   }
@@ -44,6 +48,10 @@ export class AcuerdosPage implements OnInit {
       this.initInteval();
     }
   }
+  ionViewWillLeave(){
+    clearInterval(this.intervarl);
+   }
+
 
   ObtenerAcuerdos()
   {
@@ -65,7 +73,8 @@ export class AcuerdosPage implements OnInit {
       }else{
         let navigationExtras: NavigationExtras = {
           state: {
-            acuerdo: this.acuerdo
+            acuerdo: this.acuerdo,
+            socio: this.socio
           }
         };
         this.router.navigate(['/acuerdos-detalle'], navigationExtras);
@@ -84,7 +93,10 @@ export class AcuerdosPage implements OnInit {
     },4000);
   }
   
+  Regresar(){
+    console.log("Regresar");
 
+  }
 
 
 

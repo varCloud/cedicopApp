@@ -38,7 +38,8 @@ export class Utils {
     async muestraToast(mensaje : string) {
         const toast = await this.toastController.create({
         message: mensaje,
-        duration: 2000
+        duration: 2000,
+        
       });
       toast.present();
     }

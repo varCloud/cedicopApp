@@ -1,9 +1,55 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>registro</ion-title>
-  </ion-toolbar>
-</ion-header>
+   <ion-toolbar>
+     <ion-buttons slot="start">
+       <ion-button>
+         <ion-back-button  defaultHref="/" icon="ios-arrow-back"></ion-back-button>
+       </ion-button>
+     </ion-buttons>
+     <ion-title>Registrarse</ion-title>
+   </ion-toolbar>
+ </ion-header>
 
-<ion-content>
 
+<ion-content >
+ <div style="text-align: center;">
+         <ion-img src="./assets/img/logo.jpg" style="width: auto;height: 18vh;margin-top:80px; "></ion-img>
+ </div>
+<div style="margin-left: 20px; margin-right: 20px;"> 
+  
+   <form>
+         <ion-row>
+         <ion-col size="12">
+               <ion-item >
+                  <ion-label position="floating">Usuario</ion-label>
+                  <ion-input  [(ngModel)]="registro.IdSocio"   name="Mail" type="text"  ></ion-input>
+               </ion-item>
+            </ion-col>
+         </ion-row>
+         <ion-row>
+            <ion-col size="12">
+               <ion-item >
+                     <ion-label position="floating">Contraseña</ion-label>
+                     <ion-input   [(ngModel)]="registro.Contrasena" name="Contrasena" type="password" ></ion-input>
+               </ion-item>
+            </ion-col>
+         </ion-row>
+         <ion-row>
+            <ion-col size="12">
+               <ion-item >
+                     <ion-label position="floating">Confirmar Contraseña</ion-label>
+                     <ion-input   [(ngModel)]="registro.ConfirmContrasena" name="ConfirmContrasena" type="password" ></ion-input>
+               </ion-item>
+            </ion-col>
+         </ion-row>
+      
+         
+         <div style="text-align: center;">
+            <ion-button   (click)="alClickRegistrarse()" >Registrarse
+               <ion-ripple-effect ></ion-ripple-effect>
+            </ion-button>
+         </div>
+   </form>
+</div>
+  
+  
 </ion-content>

@@ -1,9 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon slot="icon-only" name="ios-arrow-back"></ion-icon>
-      </ion-button>
+      <ion-back-button  defaultHref="/" icon="ios-arrow-back"></ion-back-button>
     </ion-buttons>
     <ion-title>Acuerdos</ion-title>
   </ion-toolbar>
@@ -37,11 +35,21 @@
             </ion-list>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="acuerdos?.Estatus!=200">
-          <ion-label>{{acuerdos?.Mensaje}}</ion-label>
-        </ion-row>
+
 
   </div>
-   
+  <div  class="ion-text-center" *ngIf="acuerdos?.Estatus!=200" >
+    <ion-row >
+      <ion-col size="12" >
+        <ion-label>{{acuerdos?.Mensaje}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col size="12" >
+        <ion-back-button defaultHref="/" text=""  shape="round" color ="primary"  fill="outline" ></ion-back-button>
+        
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>
 
