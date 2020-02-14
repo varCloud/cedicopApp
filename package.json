@@ -31,7 +31,6 @@
     "@ionic/storage": "^2.2.0",
     "cordova": "^9.0.0",
     "cordova-android": "^8.1.0",
-    "cordova-plugin-app-preferences": "^0.99.3",
     "cordova-sqlite-storage": "^4.0.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.5.1",
