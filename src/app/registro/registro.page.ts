@@ -29,23 +29,48 @@ export class RegistroPage implements OnInit {
   }
 
   alClickRegistrarse() {
+    if (this.registro.IdSocio === ''){
+      this.utils.muestraToast('Este campo no puede estar vacio');
+      return;
+    }
+
+    if(this.registro.Contrasena === ''){
+      this.utils.muestraToast('Este campo no puede estar vacio');
+      return;
+    }
+
+    if(this.registro.ConfirmContrasena === ''){
+      this.utils.muestraToast('El campo Confirmar Contraseña no puede estar vacio');
+      return;
+    }
+
+    if(this.registro.ConfirmContrasena !== this.registro.Contrasena){
+      this.utils.muestraToast('Las contraseñas no coinciden');
+      return;
+    }
+
+
     this.utils.presentLoading("Cargando ..!!");
-     console.log(this.registro);
     this.servicioLogin.RegistarSocio(this.registro).subscribe(data => {
        this.utils.cerrarLoading();
        this.data = data;
-        console.log(this.data)
+
         if(this.data.Estatus == 200)
         {
-            this.preferences.setValue("bienvenido",false)
-            this.preferences.setValue("socio",this.data.Model);
-            this.router.navigateByUrl('/principal');
+            console.log(this.data)
+            this.preferences.setValue("bienvenido",false).then(result =>{
+              this.preferences.setValue("socio",this.data.Model).then(res=> {
+                  this.router.navigateByUrl('/principal');
+              });
+            })
+          
         }else{
               this.utils.muestraAlert(this.data.Mensaje);
               this.router.navigateByUrl('login');
               
         }
     },err => {
+        this.utils.muestraToast(JSON.stringify(err));
         this.utils.cerrarLoading();
     })
     

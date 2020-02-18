@@ -14,7 +14,7 @@ export class Preferences {
   }
 
   setValue(nombreCampo:string , valor : any){ 
-      this.storge.set(nombreCampo , valor);
+      return this.storge.set(nombreCampo , valor);
   }
 
   getValue(nombreCampo: string){

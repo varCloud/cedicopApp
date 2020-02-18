@@ -24,6 +24,7 @@ export class AcuerdosDetallePage implements OnInit    {
   estatus : any;
   votoArribaBlack : string;
   votoAbajoBlack : string;
+  descripcionAcuerdo : string ; 
  
   time: BehaviorSubject<string> =  new BehaviorSubject('00:00')
   percent : BehaviorSubject<number> = new BehaviorSubject(100);
@@ -44,8 +45,10 @@ export class AcuerdosDetallePage implements OnInit    {
 
     
     if(this.router.getCurrentNavigation().extras.state){
+
       this.acuerdo =  this.router.getCurrentNavigation().extras.state.acuerdo;
       this.socio = this.router.getCurrentNavigation().extras.state.socio;
+      this.descripcionAcuerdo = this.acuerdo.Descripcion;
       console.log(this.acuerdo);
       console.log("IdSocio: "+this.socio.IdSocio)
     }
@@ -54,6 +57,7 @@ export class AcuerdosDetallePage implements OnInit    {
  
 
   alClickAceptar(){
+    clearInterval(this.intervarl);
     this.utils.presentLoading("procesando su voto.");
     this.acuerdo.votosAFavor = this.afavor;
     this.acuerdo.votosEnContra = this.enContra;

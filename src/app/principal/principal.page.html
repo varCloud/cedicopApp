@@ -6,7 +6,7 @@
         <ion-icon slot="icon-only" name="ios-keypad"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Asambleas</ion-title>
+    <ion-title>CEDICOOP</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -52,8 +52,8 @@
 </ion-menu> 
 <ion-router-outlet id="content" main> </ion-router-outlet> 
 <ion-content>
-      <ion-grid>
-        <ion-row *ngIf="asambleas?.Estatus==200">
+      <ion-grid *ngIf="asambleas?.Estatus==200">
+        <ion-row >
           <ion-col size="12" *ngFor="let item of asambleas?.Model">
             <ion-list>
                 <ion-item (click)="DetalleAsamblea(item)">
@@ -65,8 +65,12 @@
                         <ion-icon slot="icon-only" name="unlock"></ion-icon>
                       </ion-button>
 
-                      <ion-button *ngIf="item.EstatusAsamblea!=2"   color="warning">
+                      <ion-button *ngIf="item.EstatusAsamblea==1"   color="warning">
                         <ion-icon slot="icon-only" name="lock"></ion-icon>
+                      </ion-button>
+
+                      <ion-button *ngIf="item.EstatusAsamblea==3"   color="primary">
+                        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
                       </ion-button>
                   </ion-col>
                   <ion-col size="2"  offset="2">
@@ -75,9 +79,12 @@
                 </ion-item>
             </ion-list>
           </ion-col>
-        </ion-row>
-        <ion-row *ngIf="asambleas?.Estatus!=200">
-            No existen Asambleas       
+        </ion-row> 
+    </ion-grid>
+
+    <ion-grid style="height: 100%"  *ngIf="asambleas?.Estatus!=200">
+      <ion-row justify-content-center align-items-center style="height: 100%">
+       <ion-label color ="primary" >Aun no tienes Asambleas Cargadas</ion-label> 
       </ion-row>
     </ion-grid>
 </ion-content>

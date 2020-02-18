@@ -69,12 +69,14 @@ export class PrincipalPage implements OnInit {
   ionViewWillEnter(){
       //this.menu.enable(true, 'first');
       this.preferences.getValue("bienvenido").then((val)=> {
-          if (val == null){
+          if (val == null || val == false){
               this.utils.muestraAlert("Bienvenido "+this.socio.Nombre+" "+this.socio.Apellidos);
               this.preferences.setValue("bienvenido", true);
+            
           }
+          this.MuestraAsamblea();
       });
-      this.MuestraAsamblea();
+      
   }
 
   MuestraAsamblea(){
@@ -88,7 +90,10 @@ export class PrincipalPage implements OnInit {
      
      if (this.asamblea.EstatusAsamblea ==2){
        this.presentAlertMultipleButtons();
-     }else{
+     }else if(this.asamblea.EstatusAsamblea ==3){
+       this.utils.muestraToast("Esta Asamblea ha finalizado")
+     }
+     else{
         var toast = this.toastController.create({
             message: 'Esta Asamblea aun no ha sido activada',
             duration: 2000

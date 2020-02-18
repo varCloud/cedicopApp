@@ -55,7 +55,7 @@ export class AcuerdosPage implements OnInit {
 
   ObtenerAcuerdos()
   {
-    this.servicioAcuerdos.ObtenerAcuerdos(this.asamblea.IdAsamblea,1).subscribe(data =>{
+    this.servicioAcuerdos.ObtenerAcuerdos(this.asamblea.IdAsamblea,this.socio.IdSocio).subscribe(data =>{
         this.acuerdos = data;
         console.log(data);
     })
