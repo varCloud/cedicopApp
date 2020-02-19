@@ -10,9 +10,9 @@ import { Injectable } from '@angular/core';
 
 export class AsambleasService {
 
-  private MetodoObtenerAsambleas : string = 'ObtenerAsambleas/'
+  private MetodoObtenerAsambleas : string = 'ObtenerAsambleas'
   private url : string
-  private RegistrarSocioAsamblea : string  = "RegistrarSocioAsamblea" 
+  private RegistrarSocioAsamblea : string  = "RegitrarSocioAsambleaDesdeAPP" 
 
   constructor(private httpClient : HttpClient) {
 

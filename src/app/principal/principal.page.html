@@ -6,7 +6,12 @@
         <ion-icon slot="icon-only" name="ios-keypad"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>CEDICOOP</ion-title>
+    <ion-title class="ion-text-center">CEDICOOP</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="MuestraAsamblea()">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -56,7 +61,7 @@
         <ion-row >
           <ion-col size="12" *ngFor="let item of asambleas?.Model">
             <ion-list>
-                <ion-item (click)="DetalleAsamblea(item)">
+                <ion-item class="animated fadeInLeft " (click)="DetalleAsamblea(item)">
                   <ion-col size="6"  >
                     <ion-label>{{item.NombreAsamblea}}</ion-label>
                   </ion-col>
@@ -87,5 +92,7 @@
        <ion-label color ="primary" >Aun no tienes Asambleas Cargadas</ion-label> 
       </ion-row>
     </ion-grid>
+
+     
 </ion-content>
 

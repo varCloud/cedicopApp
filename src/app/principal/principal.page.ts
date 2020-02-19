@@ -92,6 +92,14 @@ export class PrincipalPage implements OnInit {
        this.presentAlertMultipleButtons();
      }else if(this.asamblea.EstatusAsamblea ==3){
        this.utils.muestraToast("Esta Asamblea ha finalizado")
+       let navigationExtras: NavigationExtras = {
+        state: {
+          asamblea: this.asamblea,
+          socio : this.socio
+        }
+      };
+      this.router.navigate(['/acuerdos'], navigationExtras);
+       
      }
      else{
         var toast = this.toastController.create({
@@ -125,11 +133,15 @@ export class PrincipalPage implements OnInit {
                       }
                     };
                     this.router.navigate(['/acuerdos'], navigationExtras);
+                  }else if(this.data.Estatus == -1){
+                      this.utils.muestraAlert(this.data.Mensaje);
                   }else{
                      this.utils.muestraToast("Intenta de nuevo para registrarte en la asamblea");
                   }
             }, err=> {
-                  this.utils.cerrarLoading()
+
+                  this.utils.cerrarLoading();
+                  this.utils.muestraToast(JSON.stringify(err));
             })
           }
         }
