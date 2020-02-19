@@ -65,7 +65,6 @@ export class LoginPage implements OnInit {
 
   }
 
-
   alClickRegistrase()
   {
     this.router.navigateByUrl('registro');

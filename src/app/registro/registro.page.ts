@@ -66,8 +66,7 @@ export class RegistroPage implements OnInit {
           
         }else{
               this.utils.muestraAlert(this.data.Mensaje);
-              this.router.navigateByUrl('login');
-              
+              //this.router.navigateByUrl('login');
         }
     },err => {
         this.utils.muestraToast(JSON.stringify(err));
