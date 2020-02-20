@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { LoginPage } from './login/login.page';
+import { timer } from 'rxjs/observable/timer'
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { LoginPage } from './login/login.page';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  showSplash   = true;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -27,7 +29,9 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString("#e6294e")
       this.splashScreen.hide();
       //this.router.navigateByUrl("login")
-      
+      // para que despues del splash por default muestre alguna animacion
+      timer(4200).subscribe(()=> this.showSplash = false)
+  
     });
   }
 }

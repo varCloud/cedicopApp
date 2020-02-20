@@ -79,7 +79,15 @@ export class PrincipalPage implements OnInit {
       
   }
 
+  ionViewDidLoad(){
+    console.log("ionViewDidLoad pagina principal")
+
+     
+  }
+ 
+
   MuestraAsamblea(){
+        console.log("MuestraAsamblea");
         this.asambleasService.ObtenerAsambleas().subscribe(data =>{
             this.asambleas = data;
         })

@@ -14,9 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 
-export class LoginPage implements OnInit {
+export class LoginPage  {
 
-
+  splash = true;
+  tabBarElement: any;
   usuario : String;
   pass : String;
   data : any ;
@@ -24,11 +25,19 @@ export class LoginPage implements OnInit {
               public toastController: ToastController,
               private router:Router,
               private preferences: Preferences,
-              private utils: Utils) { }
+              private utils: Utils) {
+                console.log("constructor");
+                //this.tabBarElement = document.querySelector('.tabbar');
+                //console.log(this.tabBarElement);
+                setTimeout(() => {  this.splash = false;  }, 3700);
+              }
 
-  ngOnInit() {
+  
 
+  ionViewDidLoad(){
+    console.log("ionViewDidLoad TIMEOUT")
   }
+ 
 
   
   alClickIniciarSesion(){
@@ -51,11 +60,7 @@ export class LoginPage implements OnInit {
           this.preferences.setValue("socio",this.data.Model);
           this.router.navigateByUrl('principal');
         }else{
-              var toast = this.toastController.create({
-                  message: this.data.Mensaje,
-                  duration: 2000
-                })
-                toast.then( t => t.present());
+              this.utils.muestraToast(this.data.Mensaje);
         }
       },err=> {
           console.log(err);
