@@ -50,8 +50,9 @@ export class PrincipalPage implements OnInit {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
+
   ngOnInit() {
-     
+     console.log("ngOnInit")
       this.preferences.getValue("socio").then((val)=>{
         this.socio = val;
         console.log("socio: "+JSON.stringify(this.socio));
@@ -62,12 +63,10 @@ export class PrincipalPage implements OnInit {
         }
        
       })
-
-
   }
 
   ionViewWillEnter(){
-      //this.menu.enable(true, 'first');
+    console.log("ionViewWillEnter")
       this.preferences.getValue("bienvenido").then((val)=> {
           if (val == null || val == false){
               this.utils.muestraAlert("Bienvenido "+this.socio.Nombre+" "+this.socio.Apellidos);
@@ -76,7 +75,7 @@ export class PrincipalPage implements OnInit {
           }
           this.MuestraAsamblea();
       });
-      
+      console.log("ngOnInit")
   }
 
   ionViewDidLoad(){
@@ -87,10 +86,15 @@ export class PrincipalPage implements OnInit {
  
 
   MuestraAsamblea(){
-        console.log("MuestraAsamblea");
+        this.utils.presentLoading("Cargando Asambleas ...")
         this.asambleasService.ObtenerAsambleas().subscribe(data =>{
             this.asambleas = data;
+            this.utils.cerrarLoading();
+        },err=> {
+          this.utils.cerrarLoading();
+
         })
+
   }
 
   DetalleAsamblea(item){

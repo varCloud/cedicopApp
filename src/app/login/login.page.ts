@@ -29,7 +29,8 @@ export class LoginPage  {
                 console.log("constructor");
                 //this.tabBarElement = document.querySelector('.tabbar');
                 //console.log(this.tabBarElement);
-                setTimeout(() => {  this.splash = false;  }, 3700);
+                //setTimeout(() => {  this.splash = false;  }, 3700);
+                //this.preferences.imprimir();
               }
 
   
@@ -51,17 +52,15 @@ export class LoginPage  {
       return;
     }
       this.utils.presentLoading("Cargando ...")
-      console.log("usuario "+this.usuario+" pass: "+this.pass)
       this.wsLogin.validaSocio(this.usuario , this.pass).subscribe(data=>{
-         console.log(data);
-        this.data = data;
-        this.utils.cerrarLoading();
-        if(this.data.Estatus == 200){
-          this.preferences.setValue("socio",this.data.Model);
-          this.router.navigateByUrl('principal');
-        }else{
-              this.utils.muestraToast(this.data.Mensaje);
-        }
+          this.data = data;
+          this.utils.cerrarLoading();
+          if(this.data.Estatus == 200){
+            this.preferences.setValue("socio",this.data.Model);
+            this.router.navigateByUrl('principal');
+          }else{
+                this.utils.muestraToast(this.data.Mensaje);
+          }
       },err=> {
           console.log(err);
           this.utils.cerrarLoading();

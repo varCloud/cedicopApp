@@ -9,16 +9,30 @@ const circuloR = 80;
   })
 
 export class Preferences {
-  constructor(private storge : Storage){
+  constructor(private storage : Storage){
 
   }
 
-  setValue(nombreCampo:string , valor : any){ 
-      return this.storge.set(nombreCampo , valor);
+   async setValue(nombreCampo:string , valor : any){ 
+      const result  =  await this.storage.set(nombreCampo , valor);
+      return result;
   }
 
-  getValue(nombreCampo: string){
-      return this.storge.get(nombreCampo);
+  async getValue(nombreCampo: string){
+    const result = await this.storage.get(nombreCampo);
+    return result;
+  }
+
+  async RemoveValue(nombreCampo: string){
+    return  await this.storage.remove(nombreCampo);
+   }
+  imprimir (){
+    this.storage.forEach( (value, key, index) => {
+      console.log("This is the value", value)
+      console.log("from the key", key)
+      console.log("Index is" ,index)
+    })
+
   }
 
 

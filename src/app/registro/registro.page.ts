@@ -28,7 +28,7 @@ export class RegistroPage implements OnInit {
       this.registro = {IdSocio :"" , Contrasena:"" , ConfirmContrasena :""}  
   }
 
-  alClickRegistrarse() {
+   alClickRegistrarse() {
     if (this.registro.IdSocio === ''){
       this.utils.muestraToast('Este campo no puede estar vacio');
       return;
@@ -52,21 +52,18 @@ export class RegistroPage implements OnInit {
 
     this.utils.presentLoading("Cargando ..!!");
     this.servicioLogin.RegistarSocio(this.registro).subscribe(data => {
-       this.utils.cerrarLoading();
        this.data = data;
-
         if(this.data.Estatus == 200)
         {
             console.log(this.data)
-            this.preferences.setValue("bienvenido",false).then(result =>{
-              this.preferences.setValue("socio",this.data.Model).then(res=> {
-                  this.router.navigateByUrl('/principal');
-              });
-            })
-          
+             this.preferences.RemoveValue("socio");
+              this.GuardarRegistro();
+      
+
+            //this.router.navigateByUrl('/principal');
         }else{
+              this.utils.cerrarLoading();
               this.utils.muestraAlert(this.data.Mensaje);
-              //this.router.navigateByUrl('login');
         }
     },err => {
         this.utils.muestraToast(JSON.stringify(err));
@@ -74,5 +71,18 @@ export class RegistroPage implements OnInit {
     })
     
   }
+
+  
+ async GuardarRegistro(){
+    
+   await  this.preferences.RemoveValue("socio");
+    
+    await this.preferences.setValue("bienvenido",false); 
+
+    await this.preferences.setValue("socio",this.data.Model);
+    
+    this.router.navigateByUrl('/principal');
+  }
+  
 
 }
