@@ -12,7 +12,7 @@
           <ion-row *ngIf="acuerdos?.Estatus==200">
             <ion-col size="12" >
               <ion-list  *ngFor= "let item of acuerdos?.Model ">
-                <ion-item (click) = "alClickMuestraAcuerdoDetalle(item)" >
+                <ion-item class="" (click) = "alClickMuestraAcuerdoDetalle(item)" >
                    
                   <ion-label>{{item.Descripcion}}</ion-label>
               

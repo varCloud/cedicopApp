@@ -57,11 +57,11 @@
 </ion-menu> 
 <ion-router-outlet id="content" main> </ion-router-outlet> 
 <ion-content>
-      <div *ngIf="asambleas?.Estatus==200" class="contendorCedicoop">
-    
-           <ion-list size="12" *ngFor="let item of asambleas?.Model; let i = index; ">
-            
-                <ion-item class="animated chat-item" (click)="DetalleAsamblea(item)">
+      <div *ngIf="asambleas?.Estatus==200" class="contendorCedicoop" >
+        
+           <ion-list size="12" *ngFor="let item of asambleas?.Model; let i = index;" >
+
+                <ion-item class="animated fadeInLeft" (click)="DetalleAsamblea(item)">
                     <ion-col size="6" >
                       <ion-label>{{item.NombreAsamblea}}</ion-label>
                     </ion-col>
@@ -82,8 +82,9 @@
                       <ion-icon   color="primary"  name="ios-arrow-forward"></ion-icon>
                     </ion-col>
                 </ion-item>
-          </ion-list>
           
+          </ion-list>
+       
       </div>
 
     <ion-grid style="height: 100%"  *ngIf="asambleas?.Estatus!=200">
