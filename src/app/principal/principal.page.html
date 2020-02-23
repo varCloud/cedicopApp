@@ -3,24 +3,19 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="MuestraMenu()">
-        <ion-icon slot="icon-only" name="ios-keypad"></ion-icon>
+        <ion-icon  color="blanco" slot="icon-only" ios="ios-keypad" name="ios-keypad"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="ion-text-center">CEDICOOP</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="MuestraAsamblea()">
-        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+        <ion-icon color="blanco" slot="icon-only" name="refresh" ios="ios-refresh"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-menu contentId="content" side="start" menuId="first">
-    <!--<ion-header> 
-       <ion-toolbar> 
-          <ion-title>Menu</ion-title> 
-       </ion-toolbar>
-    </ion-header> -->
+<ion-content>
+<ion-menu contentId="content" side="start" menuId="first" type="overlay">
     <ion-content>
       <ion-row>
         <div id="profileImage">
@@ -36,7 +31,7 @@
             <ion-col>
                 <ion-label color="primary">{{'Numero de Socio: '+socio.IdSocio}}</ion-label>
             </ion-col>
-            <ion-item-divider></ion-item-divider>
+            <ion-item-divider ></ion-item-divider>
           </ion-row>
        </div>
         <ion-list>
@@ -56,7 +51,7 @@
    </ion-content>
 </ion-menu> 
 <ion-router-outlet id="content" main> </ion-router-outlet> 
-<ion-content>
+
       <div *ngIf="asambleas?.Estatus==200" class="contendorCedicoop" >
         
            <ion-list size="12" *ngFor="let item of asambleas?.Model; let i = index;" >

@@ -165,6 +165,7 @@ export class PrincipalPage implements OnInit {
  
 
   salir(){
+    this.utils.muestraToast("Saliendo...!!")
     navigator['app'].exitApp();
   }
 

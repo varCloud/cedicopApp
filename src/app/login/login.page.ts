@@ -29,7 +29,7 @@ export class LoginPage  {
                 console.log("constructor");
                 //this.tabBarElement = document.querySelector('.tabbar');
                 //console.log(this.tabBarElement);
-                //setTimeout(() => {  this.splash = false;  }, 3700);
+                setTimeout(() => {  this.splash = false;  }, 3700);
                 //this.preferences.imprimir();
               }
 
@@ -54,10 +54,8 @@ export class LoginPage  {
       this.utils.presentLoading("Cargando ...")
       this.wsLogin.validaSocio(this.usuario , this.pass).subscribe(data=>{
           this.data = data;
-          this.utils.cerrarLoading();
           if(this.data.Estatus == 200){
-            this.preferences.setValue("socio",this.data.Model);
-            this.router.navigateByUrl('principal');
+            this.LanzaPrincipal()
           }else{
                 this.utils.muestraToast(this.data.Mensaje);
           }
@@ -72,6 +70,12 @@ export class LoginPage  {
   alClickRegistrase()
   {
     this.router.navigateByUrl('registro');
+  }
+
+  async LanzaPrincipal()
+  {
+    await this.preferences.setValue("socio",this.data.Model);
+    this.router.navigateByUrl('principal');
   }
 
 }

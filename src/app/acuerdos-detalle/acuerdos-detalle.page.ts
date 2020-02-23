@@ -1,4 +1,4 @@
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { AcuerdosService } from './../Servicios/acuerdos.service';
 import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Component, OnInit  } from '@angular/core';
@@ -24,7 +24,8 @@ export class AcuerdosDetallePage implements OnInit    {
   estatus : any;
   votoArribaBlack : string;
   votoAbajoBlack : string;
-  descripcionAcuerdo : string ; 
+  descripcionAcuerdo : string ;
+  esIos : boolean = false;
  
   time: BehaviorSubject<string> =  new BehaviorSubject('00:00')
   percent : BehaviorSubject<number> = new BehaviorSubject(100);
@@ -36,14 +37,16 @@ export class AcuerdosDetallePage implements OnInit    {
   afavor : boolean = false
   enContra : boolean = false;
 
-  constructor(private alertController :  AlertController ,private router : Router , private acuerdoServicio : AcuerdosService, private utils : Utils) { 
+  constructor(private alertController :  AlertController ,
+    private router : Router ,
+     private acuerdoServicio : AcuerdosService, 
+     private utils : Utils,
+     private platform : Platform) { 
     this.votoAbajoBlack = "assets/img/votoAbajoBlack.png";
     this.votoArribaBlack = "assets/img/votoArribaBlack.png";
   }
 
   ngOnInit() {
-
-    
     if(this.router.getCurrentNavigation().extras.state){
 
       this.acuerdo =  this.router.getCurrentNavigation().extras.state.acuerdo;
@@ -53,6 +56,20 @@ export class AcuerdosDetallePage implements OnInit    {
       console.log("IdSocio: "+this.socio.IdSocio)
     }
     this.startTimer(this.duracion);
+
+    if(this.platform.is('desktop')){
+      console.log('desktop');
+      this.esIos = true;
+
+    }
+    if(this.platform.is('ios')){
+      console.log('ios');
+      this.esIos = true;
+      
+    }
+    if(this.platform.is('android')){
+      console.log('android');
+    }
   }
  
 
@@ -125,6 +142,7 @@ export class AcuerdosDetallePage implements OnInit    {
 
   stopTimer()
   {
+    this.timer =0;
     clearInterval(this.intervarl);
     this.time.next('00:00');
 
@@ -144,13 +162,13 @@ export class AcuerdosDetallePage implements OnInit    {
     const totalTime = this.duracion 
     const percentage  = ((totalTime - this.timer) / totalTime) * 100;
     this.percent.next(percentage);
-
     --this.timer;
     
     if(this.timer < 0)
     {
-      console.log("timer: "+this.stopTimer);
       this.stopTimer();
+      console.log("timer: "+this.stopTimer);
+      
       if(!this.afavor && !this.enContra )
       {
         this.enContra = true;

@@ -80,10 +80,34 @@
   --ion-color-cedicop-contrast-rgb: 255, 255, 255;
   --ion-color-cedicop-shade: #ea4e6d;
   --ion-color-cedicop-tint: #ea4e6d;
+
+  --ion-color-blanco : #ffffff;
+  --ion-color-cedicop-blanco: #ffffff;
+  --ion-color-cedicop-blanco-rgb: 255, 255, 255;
+  --ion-color-cedicop-blanco: #ffffff;
+  --ion-color-cedicop-blanco: #ffffff;
+
 }
 
 .ion-color-cedicop{
   --ion-color-base: var(--ion-color-cedicop) !important;
+}
+
+.ion-color-blanco{
+  --ion-color-base: var(--ion-color-blanco) !important;
+}
+
+
+ion-menu{
+  z-index: 2;
+}
+
+ion-back-button{
+  --color:white !important;
+}
+ion-item-divider{
+  --color:white !important;
+  --background:white !important;
 }
 
 ion-toolbar{
@@ -155,3 +179,4 @@ ion-toolbar{
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
