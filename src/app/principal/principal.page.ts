@@ -53,16 +53,22 @@ export class PrincipalPage implements OnInit {
 
   ngOnInit() {
      console.log("ngOnInit")
-      this.preferences.getValue("socio").then((val)=>{
-        this.socio = val;
-        console.log("socio: "+JSON.stringify(this.socio));
-        if(this.socio != null){
-             this.nombre =this.socio.Nombre.charAt(0)+this.socio.Apellidos.charAt(0);;
-        }else{
-          console.log("No existe socio Registrado")
-        }
-       
-      })
+     this.ObtenerSocioPreferences()
+     
+  }
+
+  async ObtenerSocioPreferences()
+  {
+    await this.preferences.getValue("socio").then((val)=>{
+      this.socio = val;
+      console.log("socio: "+JSON.stringify(this.socio));
+      if(this.socio != null){
+           this.nombre =this.socio.Nombre.charAt(0)+this.socio.Apellidos.charAt(0);;
+      }else{
+        console.log("No existe socio Registrado")
+      }
+    })
+  
   }
 
   ionViewWillEnter(){
@@ -71,11 +77,9 @@ export class PrincipalPage implements OnInit {
           if (val == null || val == false){
               this.utils.muestraAlert("Bienvenido "+this.socio.Nombre+" "+this.socio.Apellidos);
               this.preferences.setValue("bienvenido", true);
-            
           }
           this.MuestraAsamblea();
       });
-      console.log("ngOnInit")
   }
 
   ionViewDidLoad(){
@@ -85,9 +89,10 @@ export class PrincipalPage implements OnInit {
   }
  
 
-  MuestraAsamblea(){
+  async MuestraAsamblea(){
         this.utils.presentLoading("Cargando Asambleas ...")
-        this.asambleasService.ObtenerAsambleas().subscribe(data =>{
+        let result  = await this.asambleasService.ObtenerAsambleas()
+        result.subscribe(data =>{
             this.asambleas = data;
             this.utils.cerrarLoading();
         },err=> {
@@ -136,7 +141,7 @@ export class PrincipalPage implements OnInit {
             this.utils.presentLoading("Cargando Acuerdos ...");
             this.asambleasService.registrarSocioAsamblea(this.socio.IdSocio ,  this.asamblea.IdAsamblea).subscribe(data=> {
                   this.data = data;
-                  this.utils.cerrarLoading()
+                  
                   if(this.data.Estatus == 200){
                     let navigationExtras: NavigationExtras = {
                       state: {
@@ -146,8 +151,10 @@ export class PrincipalPage implements OnInit {
                     };
                     this.router.navigate(['/acuerdos'], navigationExtras);
                   }else if(this.data.Estatus == -1){
+                      this.utils.cerrarLoading() 
                       this.utils.muestraAlert(this.data.Mensaje);
                   }else{
+                     this.utils.cerrarLoading()
                      this.utils.muestraToast("Intenta de nuevo para registrarte en la asamblea");
                   }
             }, err=> {

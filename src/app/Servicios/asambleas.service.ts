@@ -23,11 +23,11 @@ export class AsambleasService {
       return  environment.urlServicios+environment.ControladorWsAsamblea+ metodo;
    }
    
-   ObtenerAsambleas()
+   async ObtenerAsambleas()
    {
         this.url = this.crearUrl(this.MetodoObtenerAsambleas);
         let postData = "idAsamblea=0";
-        return this.httpClient.post(this.url,postData,{
+        return  await this.httpClient.post(this.url,postData,{
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
    }

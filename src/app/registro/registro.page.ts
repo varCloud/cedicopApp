@@ -75,7 +75,7 @@ export class RegistroPage implements OnInit {
   
  async GuardarRegistro(){
     
-   await  this.preferences.RemoveValue("socio");
+    await  this.preferences.RemoveValue("socio");
     
     await this.preferences.setValue("bienvenido",false); 
 
