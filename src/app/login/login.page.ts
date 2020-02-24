@@ -29,7 +29,7 @@ export class LoginPage  {
                 console.log("constructor");
                 //this.tabBarElement = document.querySelector('.tabbar');
                 //console.log(this.tabBarElement);
-                setTimeout(() => {  this.splash = false;  }, 3700);
+                //setTimeout(() => {  this.splash = false;  }, 3700);
                 //this.preferences.imprimir();
               }
 

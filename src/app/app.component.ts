@@ -30,8 +30,8 @@ export class AppComponent {
       this.splashScreen.hide();
       //this.router.navigateByUrl("login")
       // para que despues del splash por default muestre alguna animacion
-      this.showSplash = false
-      //timer(4100).subscribe(()=> this.showSplash = false)
+      //this.showSplash = false
+      timer(4100).subscribe(()=> this.showSplash = false)
   
     });
   }
