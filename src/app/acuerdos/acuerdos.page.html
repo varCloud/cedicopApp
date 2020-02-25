@@ -36,7 +36,15 @@
           </ion-col>
         </ion-row>
 
-
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button (click) ="verPDF()" color="primary">
+            <ion-icon name="ios-eye" ios="ios-eye" ></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button (click) ="descargarDocumento()" color="secondary">
+            <ion-icon name="add" ios="ios-eye" ></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+        
   </div>
   <ion-grid style="height: 100%"   class="ion-text-center" *ngIf="acuerdos?.Estatus!=200" >
     <ion-row justify-content-center align-items-center style="height: 100%">

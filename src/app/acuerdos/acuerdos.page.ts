@@ -1,8 +1,13 @@
 import { Utils } from './../Utilerias/Utils';
 import { Component, OnInit } from '@angular/core';
-
-import {  ActivatedRoute , Router , NavigationExtras} from '@angular/router'; // para recibir parametros
+import { ActivatedRoute , Router , NavigationExtras} from '@angular/router'; // para recibir parametros
 import { AcuerdosService } from './../Servicios/acuerdos.service'
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
+import { Platform } from '@ionic/angular';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 
 
 
@@ -21,14 +26,18 @@ export class AcuerdosPage implements OnInit {
   constructor(private route : ActivatedRoute ,
               private router : Router,
               private servicioAcuerdos : AcuerdosService,
-              private utils : Utils) { }
+              private utils : Utils,
+              
+              private document : DocumentViewer,
+              private file : File ,
+              private fileTransefer : FileTransfer,
+              private fileOpener : FileOpener,
+              private platform : Platform) { 
+
+
+              }
 
   ngOnInit() {
-      /*this.route.paramMap.subscribe((params) =>{
-          let parametros = params.get('id');
-          console.log(parametros);
-      });
-      */
      console.log("OnIniti: AcuerdosPage");
      if(this.router.getCurrentNavigation().extras.state){
         this.asamblea =  this.router.getCurrentNavigation().extras.state.asamblea;
@@ -38,6 +47,52 @@ export class AcuerdosPage implements OnInit {
      }
     
   }
+  
+  verPDF(){
+    let filePath = this.file.applicationDirectory+'www/assets'
+    this.utils.muestraToast("Abriendo el documento.")
+    if (this.platform.is('android')){
+        let AuxFilePath = Date.now();
+        this.file.copyFile(filePath,'portafolio.pdf',this.file.dataDirectory,AuxFilePath+'.pdf').then( result => {
+            this.fileOpener.open(result.nativeURL,'application/pdf')
+        },err=>{
+             this.utils.muestraToast("Error el documento."+JSON.stringify(err));
+        });
+    }else{ 
+      const options : DocumentViewerOptions = {
+            title: 'My PDF'
+          }
+      this.document.viewDocument(filePath+'/'+'portafolio.pdf','application/pdf',options)
+    }
+     
+  }
+
+  descargarDocumento()
+  {
+    let documentoADescargar = 'http://www.bluecloud.com.mx/2020/proyectos/portafolio.pdf';
+    let path = this.file.dataDirectory;
+    const transfer = this.fileTransefer.create();
+
+    transfer.download(documentoADescargar, path + 'archivo.pdf').then( entry => {
+       this.utils.muestraToast("Descargando");
+       this.utils.muestraToast("url" +JSON.stringify(entry));
+       let url = entry.toUrl();
+       
+        this.utils.muestraToast("url" +JSON.stringify(url));
+        if (this.platform.is('ios')){
+            this.document.viewDocument(url,'application/pdf',{})
+        }else{
+             this.fileOpener.open(url,'application/pdf')
+        }
+        }).catch((error)  => {
+          console.log(error);
+           this.utils.muestraToast("error descargar" +JSON.stringify(error));
+        });
+        
+    //this.utils.muestraToast("Fin de  descargando el documento.")
+
+  }
+
 
   ionViewWillEnter()
   {

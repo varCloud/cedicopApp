@@ -3,8 +3,8 @@ import { AcuerdosService } from './../Servicios/acuerdos.service';
 import { Router,  NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Component, OnInit  } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Utils } from './../Utilerias/Utils'
-
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
+import { Utils } from '../Utilerias/Utils';
 
 //import {  } from 'rxjs'
 const circuloR = 80;
@@ -40,10 +40,11 @@ export class AcuerdosDetallePage implements OnInit    {
   constructor(private alertController :  AlertController ,
     private router : Router ,
      private acuerdoServicio : AcuerdosService, 
-     private utils : Utils,
+     private utils: Utils,
      private platform : Platform) { 
     this.votoAbajoBlack = "assets/img/votoAbajoBlack.png";
     this.votoArribaBlack = "assets/img/votoArribaBlack.png";
+   
   }
 
   ngOnInit() {
@@ -72,7 +73,6 @@ export class AcuerdosDetallePage implements OnInit    {
     }
   }
  
-
   alClickAceptar(){
     clearInterval(this.intervarl);
     this.utils.presentLoading("procesando su voto.");
@@ -97,7 +97,7 @@ export class AcuerdosDetallePage implements OnInit    {
                     let navigationExtras : NavigationExtras ={
                       state :
                       {
-                       acuerdo : this.acuerdo
+                          acuerdo : this.acuerdo
                       }
                     }
                      this.router.navigate(['/acuerdos'],navigationExtras);
@@ -106,8 +106,8 @@ export class AcuerdosDetallePage implements OnInit    {
                 ]
               });
               alert.then( t => t.present());
-              
           }
+
     },err => {
       this.utils.cerrarLoading();
       this.utils.muestraToast('Espere un momento y vuelva a intentarlo');
@@ -116,6 +116,7 @@ export class AcuerdosDetallePage implements OnInit    {
    });
 
   }
+
   alClickVoto(){
     this.afavor = true;
     this.enContra = false;
