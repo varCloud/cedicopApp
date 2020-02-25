@@ -4,8 +4,8 @@ import { ActivatedRoute , Router , NavigationExtras} from '@angular/router'; // 
 import { AcuerdosService } from './../Servicios/acuerdos.service'
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { File , FileEntry} from '@ionic-native/file/ngx';
+import { FileTransfer  } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
@@ -27,7 +27,6 @@ export class AcuerdosPage implements OnInit {
               private router : Router,
               private servicioAcuerdos : AcuerdosService,
               private utils : Utils,
-              
               private document : DocumentViewer,
               private file : File ,
               private fileTransefer : FileTransfer,
@@ -48,12 +47,12 @@ export class AcuerdosPage implements OnInit {
     
   }
   
-  verPDF(){
+  verPDF(nombreDocumento : string){
     let filePath = this.file.applicationDirectory+'www/assets'
     this.utils.muestraToast("Abriendo el documento.")
     if (this.platform.is('android')){
         let AuxFilePath = Date.now();
-        this.file.copyFile(filePath,'portafolio.pdf',this.file.dataDirectory,AuxFilePath+'.pdf').then( result => {
+        this.file.copyFile(filePath,nombreDocumento,this.file.dataDirectory,AuxFilePath+'.pdf').then( result => {
             this.fileOpener.open(result.nativeURL,'application/pdf')
         },err=>{
              this.utils.muestraToast("Error el documento."+JSON.stringify(err));
@@ -69,28 +68,50 @@ export class AcuerdosPage implements OnInit {
 
   descargarDocumento()
   {
+    this.utils.presentLoading("Abriendo documento...")
     let documentoADescargar = 'http://www.bluecloud.com.mx/2020/proyectos/portafolio.pdf';
     let path = this.file.dataDirectory;
     const transfer = this.fileTransefer.create();
 
-    transfer.download(documentoADescargar, path + 'archivo.pdf').then( entry => {
-       this.utils.muestraToast("Descargando");
-       this.utils.muestraToast("url" +JSON.stringify(entry));
-       let url = entry.toUrl();
-       
-        this.utils.muestraToast("url" +JSON.stringify(url));
-        if (this.platform.is('ios')){
-            this.document.viewDocument(url,'application/pdf',{})
+    this.file.checkFile(this.file.dataDirectory,  this.asamblea.IdAsamblea+'pdf')
+    .then(result => {
+        console.log("result checkFile: ",JSON.stringify(result))
+        console.log("pathDocumentoExiste: ",this.file.dataDirectory+this.asamblea.IdAsamblea+'pdf')
+        if(this.platform.is('ios')){
+             this.document.viewDocument(this.file.dataDirectory+this.asamblea.IdAsamblea+'pdf','application/pdf',{})
         }else{
-             this.fileOpener.open(url,'application/pdf')
+             this.fileOpener.open(this.file.dataDirectory+this.asamblea.IdAsamblea+'pdf','application/pdf')
         }
-        }).catch((error)  => {
-          console.log(error);
-           this.utils.muestraToast("error descargar" +JSON.stringify(error));
-        });
-        
-    //this.utils.muestraToast("Fin de  descargando el documento.")
-
+    }).catch(err =>{
+    
+        console.log('Directory doesn exist', JSON.stringify(err));
+        transfer.download(documentoADescargar, path + this.asamblea.IdAsamblea+'pdf')
+        .then((entry : FileEntry) => {
+              this.utils.muestraToast("Descargando");
+              //console.log("nativeURL: ", entry.nativeURL)
+              //console.log("entry : " +JSON.stringify(entry));
+              let url = entry.toURL();
+              //console.log("url : " +JSON.stringify(url));
+              if (this.platform.is('ios')){
+                    this.document.viewDocument(url,'application/pdf',{})
+              }else{
+                    this.fileOpener.open(url,'application/pdf')
+                    .then(() => {
+                          //console.log("File is opened")
+                          this.utils.cerrarLoading();
+                      })
+                    .catch(e => {
+                            //console.log("Error opening file", e)
+                            this.utils.cerrarLoading()
+                      });
+                }
+         })
+        .catch((error)  => {
+                  this.utils.cerrarLoading()
+                  console.log("error de descargar" +error);
+                  this.utils.muestraToast("error descargar" +JSON.stringify(error));
+         });
+      })
   }
 
 

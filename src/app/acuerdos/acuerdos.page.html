@@ -27,25 +27,14 @@
 
                   <ion-button *ngIf="!item.activarVotacion" color="danger">
                     <ion-icon slot="icon-only" name="lock"></ion-icon>
-                  </ion-button>
-
-             
-
+                  </ion-button>         
               </ion-item>
             </ion-list>
           </ion-col>
         </ion-row>
-
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button (click) ="verPDF()" color="primary">
-            <ion-icon name="ios-eye" ios="ios-eye" ></ion-icon>
-          </ion-fab-button>
-          <ion-fab-button (click) ="descargarDocumento()" color="secondary">
-            <ion-icon name="add" ios="ios-eye" ></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-        
   </div>
+ 
+
   <ion-grid style="height: 100%"   class="ion-text-center" *ngIf="acuerdos?.Estatus!=200" >
     <ion-row justify-content-center align-items-center style="height: 100%">
       <ion-col size="12" >
@@ -54,5 +43,17 @@
       </ion-col>
     </ion-row>
   </ion-grid >
+
 </ion-content>
+<ion-footer>
+  <div *ngIf="acuerdos?.Estatus==200">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click) ="descargarDocumento()" color="secondary">
+        <ion-icon color="blanco" name="ios-eye" ios="ios-eye" ></ion-icon> 
+      </ion-fab-button>
+      <ion-label style="position: relative;top: -35px;right: 85px; color: white;
+      background-color: rgba(0,0,0,0.7);line-height: 24px;padding: 4px 8px;   border-radius: 4px;">Material</ion-label>
+    </ion-fab>
+  </div>
+</ion-footer>
 
