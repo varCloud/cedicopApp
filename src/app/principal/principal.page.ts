@@ -35,6 +35,11 @@ export class PrincipalPage implements OnInit {
     private platform : Platform,
     ) {
 
+      this.platform.ready().then(()=> {
+        console.log("onReady")
+        this.MuestraAsamblea();
+      });
+
 
   }
   MuestraMenu() {
@@ -53,7 +58,7 @@ export class PrincipalPage implements OnInit {
 
   ngOnInit() {
      console.log("ngOnInit")
-     this.ObtenerSocioPreferences()
+    
      
   }
 
@@ -61,31 +66,34 @@ export class PrincipalPage implements OnInit {
   {
     await this.preferences.getValue("socio").then((val)=>{
       this.socio = val;
-      console.log("socio: "+JSON.stringify(this.socio));
+
       if(this.socio != null){
            this.nombre =this.socio.Nombre.charAt(0)+this.socio.Apellidos.charAt(0);;
       }else{
         console.log("No existe socio Registrado")
       }
     })
+    console.log("socio: "+JSON.stringify(this.socio));
+    await this.preferences.getValue("bienvenido").then((val)=> {
+    if (val == null || val == false){
+          this.utils.muestraAlert("Bienvenido "+this.socio.Nombre+" "+this.socio.Apellidos);
+          this.preferences.setValue("bienvenido", true);
+      }
+    });
+    console.log("bienvenido...");
   
   }
 
   ionViewWillEnter(){
+    
+    this.ObtenerSocioPreferences()
     console.log("ionViewWillEnter")
-      this.preferences.getValue("bienvenido").then((val)=> {
-          if (val == null || val == false){
-              this.utils.muestraAlert("Bienvenido "+this.socio.Nombre+" "+this.socio.Apellidos);
-              this.preferences.setValue("bienvenido", true);
-          }
-          this.MuestraAsamblea();
-      });
+
+ 
   }
 
   ionViewDidLoad(){
     console.log("ionViewDidLoad pagina principal")
-
-     
   }
  
 

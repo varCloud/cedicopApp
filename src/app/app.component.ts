@@ -31,7 +31,7 @@ export class AppComponent {
       //this.router.navigateByUrl("login")
       // para que despues del splash por default muestre alguna animacion
       //this.showSplash = false
-      timer(4100).subscribe(()=> this.showSplash = false)
+      timer(4000).subscribe(()=> this.showSplash = false)
   
     });
   }
