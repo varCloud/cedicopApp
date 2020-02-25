@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Utils } from './../Utilerias/Utils';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute , Router , NavigationExtras} from '@angular/router'; // para recibir parametros
@@ -41,7 +42,7 @@ export class AcuerdosPage implements OnInit {
      if(this.router.getCurrentNavigation().extras.state){
         this.asamblea =  this.router.getCurrentNavigation().extras.state.asamblea;
         this.socio = this.router.getCurrentNavigation().extras.state.socio;
-        console.log("idAsamble: "+this.asamblea.IdAsamblea);
+        console.log("Asamblea: ", JSON.stringify(this.asamblea));
         console.log("idSocio: "+this.socio.IdSocio);
      }
     
@@ -68,8 +69,11 @@ export class AcuerdosPage implements OnInit {
 
   descargarDocumento()
   {
+    
     this.utils.presentLoading("Abriendo documento...")
-    let documentoADescargar = 'http://www.bluecloud.com.mx/2020/proyectos/portafolio.pdf';
+    // let documentoADescargar = 'http://www.bluecloud.com.mx/2020/proyectos/portafolio.pdf';
+    let documentoADescargar = environment.urlServidor + this.asamblea.MaterialPDF.pathExpediente;
+    console.log("Documento a Descargar:", documentoADescargar);
     let path = this.file.dataDirectory;
     const transfer = this.fileTransefer.create();
 
@@ -119,7 +123,6 @@ export class AcuerdosPage implements OnInit {
   {
      this.ObtenerAcuerdos();
      console.log("ionViewWillEnter: AcuerdosPage");
-     console.log(this.asamblea);
      if(this.asamblea !== "undefined"){
       this.initInteval();
     }

@@ -35,15 +35,15 @@ export class PrincipalPage implements OnInit {
     private platform : Platform,
     ) {
 
-      this.platform.ready().then(()=> {
-        console.log("onReady")
-        this.MuestraAsamblea();
-      });
+    this.platform.ready().then(()=> {
+         console.log("onReady")
+         this.ObtenerSocioPreferences()
+         this.MuestraAsamblea();
+    });
 
 
   }
   MuestraMenu() {
-    
     this.menu.open('first');
   }
 
@@ -56,11 +56,8 @@ export class PrincipalPage implements OnInit {
     this.menu.open('custom');
   }
 
-  ngOnInit() {
-     console.log("ngOnInit")
-    
-     
-  }
+  ngOnInit() {}
+  
 
   async ObtenerSocioPreferences()
   {
@@ -85,11 +82,7 @@ export class PrincipalPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    
-    this.ObtenerSocioPreferences()
     console.log("ionViewWillEnter")
-
- 
   }
 
   ionViewDidLoad(){
@@ -101,6 +94,7 @@ export class PrincipalPage implements OnInit {
         this.utils.presentLoading("Cargando Asambleas ...")
         let result  = await this.asambleasService.ObtenerAsambleas()
         result.subscribe(data =>{
+            console.log(data);
             this.asambleas = data;
             this.utils.cerrarLoading();
         },err=> {
