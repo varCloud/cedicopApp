@@ -178,6 +178,7 @@ export class PrincipalPage implements OnInit {
   
 
   salir(){
+    
     this.utils.muestraToast("cerrando aplicacion")
     if(this.platform.is('ios')){
       this.router.navigateByUrl('/login');
