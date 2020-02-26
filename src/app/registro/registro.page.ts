@@ -56,8 +56,7 @@ export class RegistroPage implements OnInit {
         if(this.data.Estatus == 200)
         {
             console.log(this.data)
-             this.preferences.RemoveValue("socio");
-              this.GuardarRegistro();
+            this.GuardarRegistro();
       
 
             //this.router.navigateByUrl('/principal');
@@ -74,7 +73,8 @@ export class RegistroPage implements OnInit {
 
   
  async GuardarRegistro(){
-    
+   
+    this.utils.presentLoading("Cargando ..!!");
     await  this.preferences.RemoveValue("socio");
     
     await this.preferences.setValue("bienvenido",false); 
