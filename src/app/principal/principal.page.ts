@@ -8,6 +8,7 @@ import { Platform } from '@ionic/angular';
 
 //para navegar entre paginas
 import { Router , NavigationExtras  } from '@angular/router';
+import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 
 @Component({
   selector: 'app-principal',
@@ -39,8 +40,11 @@ export class PrincipalPage implements OnInit {
          console.log("onReady")
          this.ObtenerSocioPreferences()
          this.MuestraAsamblea();
+         this.platform.backButton.subscribeWithPriority(1, () => {
+            // to disable hardware back button on whole app
+            //desabilita el boton de atras en android
+         });
     });
-
 
   }
   MuestraMenu() {
@@ -89,7 +93,6 @@ export class PrincipalPage implements OnInit {
     console.log("ionViewDidLoad pagina principal")
   }
  
-
   async MuestraAsamblea(){
         this.utils.presentLoading("Cargando Asambleas ...")
         let result  = await this.asambleasService.ObtenerAsambleas()
@@ -172,10 +175,11 @@ export class PrincipalPage implements OnInit {
     await alert.present();
   }
  
+  
 
   salir(){
-    this.utils.muestraToast("Saliendo...!!")
     navigator['app'].exitApp();
+    
   }
 
 }

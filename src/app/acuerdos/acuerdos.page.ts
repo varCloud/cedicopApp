@@ -27,7 +27,7 @@ export class AcuerdosPage implements OnInit {
   constructor(private route : ActivatedRoute ,
               private router : Router,
               private servicioAcuerdos : AcuerdosService,
-              private utils : Utils,
+              private utils:Utils,
               private document : DocumentViewer,
               private file : File ,
               private fileTransefer : FileTransfer,
@@ -75,23 +75,23 @@ export class AcuerdosPage implements OnInit {
     let documentoADescargar = environment.urlServidor + this.asamblea.MaterialPDF.pathExpediente;
     console.log("Documento a Descargar:", documentoADescargar);
     let path = this.file.dataDirectory;
+    let nombreDocumento = this.asamblea.MaterialPDF.nombreDoc;
     const transfer = this.fileTransefer.create();
-
-    this.file.checkFile(this.file.dataDirectory,  this.asamblea.IdAsamblea+'pdf')
+    
+    this.file.checkFile(this.file.dataDirectory,  nombreDocumento)
     .then(result => {
         console.log("result checkFile: ",JSON.stringify(result))
-        console.log("pathDocumentoExiste: ",this.file.dataDirectory+this.asamblea.IdAsamblea+'pdf')
+        console.log("pathDocumentoExiste: ",this.file.dataDirectory+nombreDocumento)
         if(this.platform.is('ios')){
-             this.document.viewDocument(this.file.dataDirectory+this.asamblea.IdAsamblea+'pdf','application/pdf',{})
+             this.document.viewDocument(this.file.dataDirectory+nombreDocumento,'application/pdf',{})
         }else{
-             this.fileOpener.open(this.file.dataDirectory+this.asamblea.IdAsamblea+'pdf','application/pdf')
+             this.fileOpener.open(this.file.dataDirectory+nombreDocumento,'application/pdf')
         }
     }).catch(err =>{
     
         console.log('Directory doesn exist', JSON.stringify(err));
-        transfer.download(documentoADescargar, path + this.asamblea.IdAsamblea+'pdf')
+        transfer.download(documentoADescargar, path + nombreDocumento)
         .then((entry : FileEntry) => {
-              this.utils.muestraToast("Descargando");
               //console.log("nativeURL: ", entry.nativeURL)
               //console.log("entry : " +JSON.stringify(entry));
               let url = entry.toURL();
