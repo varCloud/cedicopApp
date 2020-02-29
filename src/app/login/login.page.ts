@@ -60,9 +60,10 @@ export class LoginPage  {
                 this.utils.muestraToast(this.data.Mensaje);
           }
       },err=> {
-          console.log(err);
+          
           this.utils.cerrarLoading();
           this.utils.muestraToast(JSON.stringify(err));
+          console.log(JSON.stringify(err));
       })
 
   }
@@ -71,13 +72,14 @@ export class LoginPage  {
 
   alClickRegistrase()
   {
-    this.router.navigateByUrl('registro');
+    this.router.navigateByUrl('/registro');
   }
 
  
 
   async ValidaSocio(){
 
+   this.utils.presentLoading("Cargando ...")
    await this.preferences.setValue("socio",this.data.Model);
    this.router.navigateByUrl('/principal');
 
