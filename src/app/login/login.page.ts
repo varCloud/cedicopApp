@@ -78,19 +78,8 @@ export class LoginPage  {
 
   async ValidaSocio(){
 
-    await this.wsLogin.validaSocio(this.usuario , this.pass).subscribe(data=>{
-      this.data = data;
-      if(this.data.Estatus == 200){
-      }else{
-            this.utils.muestraToast(this.data.Mensaje);
-      }
-   },err=> {
-      console.log(err);
-      this.utils.cerrarLoading();
-      this.utils.muestraToast(JSON.stringify(err));
-   })
    await this.preferences.setValue("socio",this.data.Model);
-   this.router.navigateByUrl('principal');
+   this.router.navigateByUrl('/principal');
 
   }
 
