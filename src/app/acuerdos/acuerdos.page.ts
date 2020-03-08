@@ -69,7 +69,8 @@ export class AcuerdosPage implements OnInit {
 
   descargarDocumento()
   {
-    
+    this.utils.descargarDocumento( this.asamblea.MaterialPDF.nombreDoc ,this.asamblea.MaterialPDF.pathExpediente);
+    /*
     this.utils.presentLoading("Abriendo documento...")
     // let documentoADescargar = 'http://www.bluecloud.com.mx/2020/proyectos/portafolio.pdf';
     let documentoADescargar = environment.urlServidor + this.asamblea.MaterialPDF.pathExpediente;
@@ -116,6 +117,7 @@ export class AcuerdosPage implements OnInit {
                   this.utils.muestraToast("error descargar" +JSON.stringify(error));
          });
       })
+      */
   }
 
 

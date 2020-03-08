@@ -17,7 +17,8 @@ import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 })
 export class PrincipalPage implements OnInit {
   
-  data : any;
+  resultWsAsambleas : any;
+  resultWsRegistrarSocioAsamblea : any;
   asambleas : any ;
   id: string;
   path : string;
@@ -25,6 +26,7 @@ export class PrincipalPage implements OnInit {
   socio : any;
   nombre : string;
   backButtonSubscription; 
+  automaticClose = false;
 
   constructor( private router:Router , 
     public asambleasService : AsambleasService, 
@@ -98,7 +100,9 @@ export class PrincipalPage implements OnInit {
         let result  = await this.asambleasService.ObtenerAsambleas()
         result.subscribe(data =>{
             console.log(data);
-            this.asambleas = data;
+            this.resultWsAsambleas = data;
+            this.asambleas = data['Model'];
+            //this.asambleas[0].open = true;
             this.utils.cerrarLoading();
         },err=> {
           this.utils.cerrarLoading();
@@ -145,9 +149,9 @@ export class PrincipalPage implements OnInit {
           handler: () => {
             this.utils.presentLoading("Cargando Acuerdos ...");
             this.asambleasService.registrarSocioAsamblea(this.socio.IdSocio ,  this.asamblea.IdAsamblea).subscribe(data=> {
-                  this.data = data;
+                  this.resultWsRegistrarSocioAsamblea = data;
                   
-                  if(this.data.Estatus == 200){
+                  if(this.resultWsRegistrarSocioAsamblea.Estatus == 200){
                     let navigationExtras: NavigationExtras = {
                       state: {
                         asamblea: this.asamblea,
@@ -155,9 +159,9 @@ export class PrincipalPage implements OnInit {
                       }
                     };
                     this.router.navigate(['/acuerdos'], navigationExtras);
-                  }else if(this.data.Estatus == -1){
+                  }else if(this.resultWsRegistrarSocioAsamblea.Estatus == -1){
                       this.utils.cerrarLoading() 
-                      this.utils.muestraAlert(this.data.Mensaje);
+                      this.utils.muestraAlert(this.resultWsRegistrarSocioAsamblea.Mensaje);
                   }else{
                      this.utils.cerrarLoading()
                      this.utils.muestraToast("Intenta de nuevo para registrarte en la asamblea");
@@ -173,8 +177,26 @@ export class PrincipalPage implements OnInit {
     });
 
     await alert.present();
+  
   }
  
+  toggleSection(index) {
+
+    console.log(this.asambleas[index].open);
+    this.asambleas[index].open = !this.asambleas[index].open;
+
+    if (this.automaticClose &&  this.asambleas[index].open) {
+      console.log("automatic close")
+      this.asambleas
+      .filter((item, itemIndex) => itemIndex != index)
+      .map(item => item.open = false);
+    }
+  }
+
+  VerMaterial(item)
+  {
+      this.utils.descargarDocumento(item.MaterialPDF.nombreDoc , item.MaterialPDF.pathExpediente)
+  }
   
 
   salir(){

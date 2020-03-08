@@ -52,37 +52,64 @@
 </ion-menu> 
 <ion-router-outlet id="content" main> </ion-router-outlet> 
 
-      <div *ngIf="asambleas?.Estatus==200" class="contendorCedicoop" >
+      <div *ngIf="resultWsAsambleas?.Estatus==200" class="contendorCedicoop" >
         
-           <ion-list size="12" *ngFor="let item of asambleas?.Model; let i = index;" >
+           <ion-list size="12" *ngFor="let item of asambleas; let i = index;" class="accordion-list">
 
-                <ion-item class="animated fadeInLeft" (click)="DetalleAsamblea(item)">
-                    <ion-col size="6" >
-                      <ion-label>{{item.NombreAsamblea}}</ion-label>
-                    </ion-col>
-                    <ion-col size="2" offset="1">
-                        <ion-button *ngIf="item.EstatusAsamblea==2" color="success">
-                          <ion-icon slot="icon-only" name="unlock"></ion-icon>
-                        </ion-button>
+                <ion-item class="animated fadeInLeft"  [ngClass]="{'section-active': item.open, 'section': !item.open}" >
+                  <ion-col  tappable size="1" (click)="toggleSection(i)" >
+                   <!--
+                     <ion-icon style="zoom:1.2;" color="primary" name="arrow-forward" *ngIf="!item.open"></ion-icon>
+                     <ion-icon style="zoom:1.2;" color="primary" name="arrow-down" *ngIf="item.open"></ion-icon>
+                   -->
 
-                        <ion-button *ngIf="item.EstatusAsamblea==1"   color="warning">
-                          <ion-icon slot="icon-only" name="lock"></ion-icon>
-                        </ion-button>
+                     <ion-icon  style="zoom:1.2;" color="primary"  name="add-circle" ios="ios-add-circle" md="md-add-circle"></ion-icon>
 
-                        <ion-button *ngIf="item.EstatusAsamblea==3"   color="primary">
-                          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
-                        </ion-button>
-                    </ion-col>
-                    <ion-col size="2"  offset="2">
-                      <ion-icon   color="primary"  name="ios-arrow-forward"></ion-icon>
-                    </ion-col>
+                  </ion-col>
+                    <div (click)="DetalleAsamblea(item)" size="12" style="width: 100%; margin-left: 2%;" >
+                    <ion-row class="ion-align-items-start">
+                        <ion-col size="7" >
+                          <ion-label>{{item.NombreAsamblea}}</ion-label>
+                        </ion-col>
+                        <ion-col  size="1">
+                            <ion-button *ngIf="item.EstatusAsamblea==2" color="success">
+                              <ion-icon slot="icon-only" name="unlock"></ion-icon>
+                            </ion-button>
+
+                            <ion-button *ngIf="item.EstatusAsamblea==1"   color="warning">
+                              <ion-icon slot="icon-only" name="lock"></ion-icon>
+                            </ion-button>
+
+                            <ion-button *ngIf="item.EstatusAsamblea==3"   color="primary">
+                              <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+                            </ion-button>
+                        </ion-col>
+                        <ion-col size="1" offset="2">
+                          <ion-icon   color="primary"  name="ios-arrow-forward"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                  </div>
                 </ion-item>
+
+                <div class="animated slideInDown"   *ngIf="item.open" style="margin-bottom: 14px;
+                margin-top: 14px;
+                width: 80%;
+                margin-left: 15%;">
+                    <ion-row (click)="VerMaterial(item)">
+                      <ion-col size="8">
+                        <ion-label> Material de la Asamblea</ion-label>
+                    </ion-col>
+                      <ion-col size="1" offset="2">
+                        <ion-icon   color="primary" name="eye" ios="ios-eye" md="md-eye"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                </div>
           
           </ion-list>
        
       </div>
 
-    <ion-grid style="height: 100%"  *ngIf="asambleas?.Estatus!=200">
+    <ion-grid style="height: 100%"  *ngIf="resultWsAsambleas?.Estatus!=200">
       <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%">
        <ion-label color ="primary" >Aun no tienes Asambleas Cargadas</ion-label> 
       </ion-row>
