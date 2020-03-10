@@ -27,6 +27,7 @@ export class PrincipalPage implements OnInit {
   nombre : string;
   backButtonSubscription; 
   automaticClose = false;
+  rotar : string  = "";
 
   constructor( private router:Router , 
     public asambleasService : AsambleasService, 
@@ -40,6 +41,7 @@ export class PrincipalPage implements OnInit {
 
     this.platform.ready().then(()=> {
          console.log("onReady")
+         this.rotar ="rotar"
          this.ObtenerSocioPreferences()
          this.MuestraAsamblea();
          this.platform.backButton.subscribeWithPriority(1, () => {
@@ -138,7 +140,7 @@ export class PrincipalPage implements OnInit {
 
   async presentAlertMultipleButtons() {
     const alert = await this.alertController.create({
-      header: 'Estas apunto de iniciar la votacion de los acuerdos',
+      header: 'Estas a punto de iniciar la votacion de los acuerdos',
       subHeader: '',
       message: '',
       buttons: [
@@ -181,7 +183,8 @@ export class PrincipalPage implements OnInit {
   }
  
   toggleSection(index) {
-
+    this.rotar  ='';
+    this.rotar  ='rotar rotar-efecto'
     console.log(this.asambleas[index].open);
     this.asambleas[index].open = !this.asambleas[index].open;
 
@@ -191,6 +194,7 @@ export class PrincipalPage implements OnInit {
       .filter((item, itemIndex) => itemIndex != index)
       .map(item => item.open = false);
     }
+    this.rotar  ='rotar';
   }
 
   VerMaterial(item)

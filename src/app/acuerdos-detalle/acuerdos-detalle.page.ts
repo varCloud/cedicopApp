@@ -75,7 +75,7 @@ export class AcuerdosDetallePage implements OnInit    {
  
   alClickAceptar(){
     clearInterval(this.intervarl);
-    this.utils.presentLoading("procesando su voto.");
+    this.utils.presentLoading("procesando su voto...");
     this.acuerdo.votosAFavor = this.afavor;
     this.acuerdo.votosEnContra = this.enContra;
     this.acuerdoServicio.VotarAcuerdos(this.acuerdo,this.socio.IdSocio).subscribe(data =>{
