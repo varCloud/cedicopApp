@@ -31,7 +31,7 @@ export class AcuerdosDetallePage implements OnInit    {
   percent : BehaviorSubject<number> = new BehaviorSubject(100);
   timer :number // segundos
   intervarl;
-  duracion = 10;
+  duracion = 20;
   circuloR= circuloR;
   circuloArray = circuloArray
   afavor : boolean = false
