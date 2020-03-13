@@ -183,18 +183,29 @@ export class PrincipalPage implements OnInit {
   }
  
   toggleSection(index) {
-    this.rotar  ='';
-    this.rotar  ='rotar rotar-efecto'
+
+    /* lineas para asignar la animacion del boton de mas*/
+    const element =  document.querySelector('#dv'+index)
+    //element.classList.add('animated', 'rotateIn')
+    element.classList.remove('rotate-izq-animation-target')
+    element.classList.add('rotate-der-animation-target')
+
     console.log(this.asambleas[index].open);
+    if(this.asambleas[index].open){
+      element.classList.remove('rotate-der-animation-target')
+      element.classList.add('rotate-izq-animation-target')
+    }
+    /* fin de  lineas para asignar la animacion del boton de mas*/
+
     this.asambleas[index].open = !this.asambleas[index].open;
 
     if (this.automaticClose &&  this.asambleas[index].open) {
-      console.log("automatic close")
       this.asambleas
       .filter((item, itemIndex) => itemIndex != index)
       .map(item => item.open = false);
     }
-    this.rotar  ='rotar';
+    
+    
   }
 
   VerMaterial(item)

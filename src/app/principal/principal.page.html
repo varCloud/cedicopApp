@@ -25,7 +25,7 @@
       <div *ngIf="socio != undefined" class="ion-text-center">
           <ion-row >
             <ion-col>
-                <ion-label>{{socio.Nombre+' '+socio.Apellidos}}</ion-label>
+                <ion-label color="primary">{{socio.Nombre+' '+socio.Apellidos}}</ion-label>
             </ion-col>
           </ion-row><ion-row class="ion-text-center">
             <ion-col>
@@ -56,14 +56,14 @@
         
            <ion-list size="12" *ngFor="let item of asambleas; let i = index;" class="accordion-list">
 
-                <ion-item class="animated fadeInLeft"  [ngClass]="{'section-active': item.open, 'section': !item.open}" >
+                <ion-item class="animated fadeInLeft delay-{{i}}ms"  [ngClass]="{'section-active': item.open, 'section': !item.open}" >
                   <ion-col  tappable size="1" (click)="toggleSection(i)" >
                    <!--
                      <ion-icon style="zoom:1.2;" color="primary" name="arrow-forward" *ngIf="!item.open"></ion-icon>
                      <ion-icon style="zoom:1.2;" color="primary" name="arrow-down" *ngIf="item.open"></ion-icon>
                    -->
-                    <div  class="{{rotar}}">
-                      <ion-icon  style="zoom:1.2;" color="primary"  name="add-circle" ios="ios-add-circle" md="md-add-circle"></ion-icon>
+                    <div >
+                      <ion-icon   id="dv{{i}}" style="zoom:1.2;" color="primary"  name="add-circle" ios="ios-add-circle" md="md-add-circle"></ion-icon>
                     </div>
                   </ion-col>
                     <div (click)="DetalleAsamblea(item)" size="12" style="width: 100%; margin-left: 2%;" >
@@ -91,7 +91,7 @@
                   </div>
                 </ion-item>
 
-                <div class="animated slideInDown ion-text-center"   *ngIf="item.open" style="margin-bottom: 14px;
+                <div class="ion-text-center"   *ngIf="item.open" style="margin-bottom: 14px;
                 margin-top: 14px;
                 width: 100%;
                 margin-left: 0%;">

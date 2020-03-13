@@ -3,13 +3,13 @@
 
 /** Ionic CSS Variables **/
 :root {
-  /** primary **/
-  --ion-color-primary: #ea4e6d;
+  /** primary  R:200 G:0 B45 = rojo --> R:53 G:50:38 **/
+  --ion-color-primary: #c8002d;
   --ion-color-primary-rgb: 234, 78, 109;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #ea4e6d;
-  --ion-color-primary-tint: #ea4e6d;
+  --ion-color-primary-shade: #c8002d;
+  --ion-color-primary-tint: #c8002d;
 
   /** secondary **/
   --ion-color-secondary: #0cd1e8;
@@ -111,7 +111,7 @@ ion-item-divider{
 }
 
 ion-toolbar{
-  --background:#ea4e6d;
+  --background:#c8002d;
   --color:white;
 }
 
@@ -170,7 +170,7 @@ ion-toolbar{
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: #ea4e6d;
+  background: #c8002d;
   font-size: 35px;
   color: #fff;
   text-align: center;

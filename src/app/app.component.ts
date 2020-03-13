@@ -26,7 +26,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       //this.statusBar.styleBlackTranslucent();
-      this.statusBar.backgroundColorByHexString("#e6294e")
+      this.statusBar.backgroundColorByHexString("#ba002a")
       this.splashScreen.hide();
       //this.router.navigateByUrl("login")
       // para que despues del splash por default muestre alguna animacion
