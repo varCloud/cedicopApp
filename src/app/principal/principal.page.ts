@@ -140,7 +140,7 @@ export class PrincipalPage implements OnInit {
 
   async presentAlertMultipleButtons() {
     const alert = await this.alertController.create({
-      header: 'Estas a punto de iniciar la votacion de los acuerdos',
+      header: 'Estas a punto de iniciar la votación de los acuerdos',
       subHeader: '',
       message: '',
       buttons: [

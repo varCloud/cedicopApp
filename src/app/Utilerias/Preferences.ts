@@ -26,6 +26,8 @@ export class Preferences {
   async RemoveValue(nombreCampo: string){
     return  await this.storage.remove(nombreCampo);
    }
+
+   
   imprimir (){
     this.storage.forEach( (value, key, index) => {
       console.log("This is the value", value)

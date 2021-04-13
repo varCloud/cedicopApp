@@ -78,6 +78,10 @@ export class AcuerdosDetallePage implements OnInit    {
     this.utils.presentLoading("procesando su voto...");
     this.acuerdo.votosAFavor = this.afavor;
     this.acuerdo.votosEnContra = this.enContra;
+    if (!this.afavor  && !this.enContra){
+      this.acuerdo.votosEnContra = true;
+    }
+
     this.acuerdoServicio.VotarAcuerdos(this.acuerdo,this.socio.IdSocio).subscribe(data =>{
           this.estatus  = data;
           console.log(data);
@@ -164,7 +168,7 @@ export class AcuerdosDetallePage implements OnInit    {
     const percentage  = ((totalTime - this.timer) / totalTime) * 100;
     this.percent.next(percentage);
     --this.timer;
-    
+    /*
     if(this.timer < 0)
     {
       this.stopTimer();
@@ -178,7 +182,7 @@ export class AcuerdosDetallePage implements OnInit    {
       this.acuerdo.votosEnContra = this.enContra;
       this.alClickAceptar()
 
-    }
+    }*/
     
   }
 
